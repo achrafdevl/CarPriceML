@@ -1,0 +1,15 @@
+fastapi
+gunicorn
+joblib
+numpy
+pandas
+prometheus-client
+pydantic
+pytest
+python-dotenv
+python-multipart
+redis
+requests
+scikit-learn
+streamlit
+uvicorn[standard]
