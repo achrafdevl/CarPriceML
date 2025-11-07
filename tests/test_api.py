@@ -20,7 +20,8 @@ def test_predict_valid():
         "mileage_mpg": 45.0,
         "engine_cc": 1200.0,
         "max_power_bhp": 80.0,
-        "seats": 5
+        "seats": 5,
+        "age": 5
     }
     response = client.post("/predict", json=payload)
     assert response.status_code == 200

@@ -15,7 +15,10 @@ from contextlib import asynccontextmanager
 REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing request')
 PREDICTION_COUNTER = Counter('predictions_total', 'Total number of predictions')
 
-# Redis client (optional)
+# Model placeholder
+model = None
+
+# Redis client 
 try:
     redis_client = redis.from_url(REDIS_URL)
 except Exception:
@@ -65,8 +68,15 @@ def metrics():
 @app.post('/predict')
 @REQUEST_TIME.time()
 def predict(payload: CarIn):
+    global model
+
     if model is None:
-        raise HTTPException(status_code=503, detail="Model not loaded. Please train the model first.")
+        try:
+            model = load_model()
+        except FileNotFoundError:
+            raise HTTPException(status_code=503, detail="Model not loaded. Please train the model first.")
+        except Exception as exc:
+            raise HTTPException(status_code=500, detail=f"Failed to load model: {exc}")
     
     data = payload.dict()
 

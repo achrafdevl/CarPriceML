@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 # Charger les variables d'environnement
 load_dotenv()
-API_URL = "http://127.0.0.1:8000"   # if Streamlit runs on the same machine
+API_URL = "http://127.0.0.1:8000" 
 
 # Configuration de la page
 st.set_page_config(
@@ -34,6 +34,7 @@ with st.form('predict_form'):
         engine_cc = st.number_input('Engine (cc)', value=1200.0, min_value=500.0)
         max_power_bhp = st.number_input('Max Power (bhp)', value=80.0, min_value=10.0)
         seats = st.number_input('Seats', min_value=2, max_value=9, value=5, step=1)
+        age = st.number_input('Age (années)', min_value=0, max_value=30, value=5, step=1)
 
     submitted = st.form_submit_button('🚀 Estimer le prix')
 
@@ -49,7 +50,8 @@ if submitted:
         'mileage_mpg': mileage_mpg,
         'engine_cc': engine_cc,
         'max_power_bhp': max_power_bhp,
-        'seats': seats
+        'seats': seats,
+        'age': age
     }
 
     with st.spinner('Estimation en cours...'):
